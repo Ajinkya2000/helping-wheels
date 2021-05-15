@@ -63,3 +63,12 @@ class Locator(APIView):
                 userList.append(user)
         serializer = UserSerializer(userList, many=True)
         return Response({'data': serializer.data}, status=status.HTTP_200_OK)
+
+
+
+class EmergencyView(APIView):
+    def get(self, request):
+        """
+        1. Phone Number, Latitude and Longitude will be provided from client
+        2. List of all voulenteers nearby will be provided as well
+        """
