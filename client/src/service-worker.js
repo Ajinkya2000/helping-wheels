@@ -70,3 +70,4 @@ self.addEventListener('message', (event) => {
 });
 
 // Any other custom service worker logic can go here.
+importScripts("https://js.pusher.com/beams/service-worker.js");

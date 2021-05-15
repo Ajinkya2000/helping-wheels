@@ -1,8 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import logo from "./logo.svg";
+import * as PusherPushNotifications from "@pusher/push-notifications-web";
+import "./App.css";
 
 function App() {
+  useEffect(() => {
+    const beamsClient = new PusherPushNotifications.Client({
+      instanceId: "8d0baa0c-08b4-43ce-9134-e9fe4b14ec6a",
+    });
+
+    beamsClient
+      .start()
+      .then(() => beamsClient.addDeviceInterest("hello"))
+      .then(() => console.log("Successfully registered and subscribed!"))
+      .catch(console.error);
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
