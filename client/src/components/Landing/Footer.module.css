@@ -1,0 +1,64 @@
+.curve path {
+  fill: #3f3d56;
+  stroke: #3f3d56;
+}
+
+.container {
+  overflow: hidden;
+  width: 100%;
+  margin: 0px;
+  /* we don't want the pseudo-elements sticking out */
+}
+
+.container svg {
+  display: block;
+  background-color: #ffffc7a6;
+}
+
+*,
+*:after,
+*::before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.container {
+  overflow: hidden;
+  width: 100%;
+  margin: 0px;
+  /* we don't want the pseudo-elements sticking out */
+}
+
+.container svg {
+  display: block;
+  background-color: #ffffc7a6;
+}
+
+*,
+*:after,
+*::before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 2% 7%;
+  background-color: #3f3d56;
+  color: azure;
+}
+
+.wrapper p {
+  font-family: "Comfortaa", sans-serif;
+}
+
+.icons {
+  display: flex;
+  font-size: 2rem;
+}
+
+.icons i {
+  margin: 7px 20px;
+}

@@ -8,7 +8,7 @@
 .heroWrapper {
   display: flex;
   justify-content: space-evenly;
-  background-color: #ffffc7;
+  background-color: #ffffc7a6;
   min-height: 100vh;
 }
 
@@ -17,10 +17,11 @@
   color: gray;
   font-style: italic;
   margin-top: 5px;
+  margin-bottom: 60px;
 }
 
 .container {
-  padding: 3%;
+  padding: 7%;
 }
 
 .heroWrapper img {
@@ -42,7 +43,7 @@
   border-color: #3ac76e;
   font-weight: bold;
   margin: 10px 0;
-  width: 50%;
+  width: 60%;
   font-size: 1.2rem;
 }
 
@@ -51,5 +52,31 @@
   color: #3ac76e;
 }
 
-@media (max-width: 768px) {
+.imageWrap,
+.textWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 768px) {
+  .heroWrapper {
+    padding: 7px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .heroText {
+    font-size: 2.5rem;
+  }
+
+  .subhead {
+    font-size: 1.2rem;
+  }
+
+  .buttonWrapper button {
+    font-size: 1rem;
+    align-items: center;
+    width: 100%;
+  }
 }
