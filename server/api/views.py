@@ -6,6 +6,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .utils import create_otp, send_otp, filter_volunteer_by_location
 from .models import User
 from math import radians
+from .utils import get_user_from_token
 
 OTP = None
 
@@ -33,6 +34,17 @@ class RegisterUserView(APIView):
             user = serializer.save()
             token = str(RefreshToken.for_user(user).access_token)
             return Response({'user': serializer.data, 'token': token}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UpdateUser(APIView):
+    @staticmethod
+    def patch(request):
+        user = get_user_from_token(request)
+        serializer = UserSerializer(instance=user, data=request.data, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

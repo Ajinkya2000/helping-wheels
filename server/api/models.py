@@ -26,7 +26,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     phone = models.CharField(max_length=10, unique=True, blank=False)
     name = models.CharField(max_length=255)
     address = models.TextField(blank=True)
-    vehicle = models.CharField(max_length=50)
+    vehicle_name = models.CharField(max_length=50)
     vehicle_number = models.CharField(max_length=50)
     longitude = models.FloatField(blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)
