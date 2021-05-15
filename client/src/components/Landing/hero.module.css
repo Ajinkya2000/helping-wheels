@@ -1,0 +1,55 @@
+.heroText {
+  font-size: 4rem;
+  font-family: "Comfortaa", sans-serif;
+  color: #3f3d56;
+  margin-bottom: 5px;
+}
+
+.heroWrapper {
+  display: flex;
+  justify-content: space-evenly;
+  background-color: #ffffc7;
+  min-height: 100vh;
+}
+
+.subhead {
+  font-size: 1.8rem;
+  color: gray;
+  font-style: italic;
+  margin-top: 5px;
+}
+
+.container {
+  padding: 3%;
+}
+
+.heroWrapper img {
+  width: 90%;
+}
+
+.buttonWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.buttonWrapper button {
+  padding: 10px;
+  background-color: #3ac76e;
+  color: white;
+  border-radius: 50px;
+  border-style: solid;
+  border-color: #3ac76e;
+  font-weight: bold;
+  margin: 10px 0;
+  width: 50%;
+  font-size: 1.2rem;
+}
+
+.buttonWrapper button:nth-child(2) {
+  background-color: transparent;
+  color: #3ac76e;
+}
+
+@media (max-width: 768px) {
+}
