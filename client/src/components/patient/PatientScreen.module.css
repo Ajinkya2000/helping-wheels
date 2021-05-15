@@ -1,0 +1,23 @@
+.emergencyButton {
+  display: inline-block;
+  padding: .5rem 2rem;
+  background: #e82430;
+  color: #fff;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  line-height: 0;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 5px 5px  15px rgba(0, 0, 0, 0.507);
+}
+
+.markerButton {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 25px;
+  color: #e82430;
+  background: transparent;
+}
