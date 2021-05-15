@@ -3,7 +3,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import UserSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
-from .utils import create_otp, send_otp
+from .utils import create_otp, send_otp, filter_volunteer_by_location
+from .models import User
+from math import radians
+from .utils import get_user_from_token
+
 OTP = None
 
 
@@ -13,7 +17,7 @@ class GetOTP(APIView):
         global OTP
         OTP = create_otp()
         send_otp(OTP, email)
-        return Response(OTP, status=status.HTTP_200_OK)
+        return Response({'otp': OTP}, status=status.HTTP_200_OK)
 
 
 class RegisterUserView(APIView):
@@ -22,12 +26,34 @@ class RegisterUserView(APIView):
         global OTP
         otp = request.data.pop('otp')
         if otp != OTP:
-            return Response({'error': 'Enter correct OTP',}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Enter correct OTP', }, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = UserSerializer(data={**request.data, "is_verified": True})
 
         if serializer.is_valid(raise_exception=True):
             user = serializer.save()
             token = str(RefreshToken.for_user(user).access_token)
-            return Response({**serializer.data, 'token': token}, status=status.HTTP_201_CREATED)
+            return Response({'user': serializer.data, 'token': token}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UpdateUser(APIView):
+    @staticmethod
+    def patch(request):
+        user = get_user_from_token(request)
+        serializer = UserSerializer(instance=user, data=request.data, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class Locator(APIView):
+    @staticmethod
+    def get(request):
+        queryset = User.objects.all()
+        lat1 = radians(request.data['patient_latitude'])
+        lon1 = radians(request.data['patient_longitude'])
+        userList = filter_volunteer_by_location(queryset, lat1, lon1)
+        serializer = UserSerializer(userList, many=True)
+        return Response({'data': serializer.data}, status=status.HTTP_200_OK)
