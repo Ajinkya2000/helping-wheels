@@ -1,0 +1,12 @@
+.emergencyButton {
+  display: inline-block;
+  padding: .5rem 2rem;
+  background: #e82430;
+  color: #fff;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  line-height: 0;
+  border-radius: 5px;
+}
