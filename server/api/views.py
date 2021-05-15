@@ -3,9 +3,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import UserSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
-from .utils import create_otp, send_otp
+from .utils import create_otp, send_otp, filter_volunteer_by_location
 from .models import User
-from math import sin, cos, sqrt, atan2, radians
+from math import radians
 
 OTP = None
 
@@ -16,7 +16,7 @@ class GetOTP(APIView):
         global OTP
         OTP = create_otp()
         send_otp(OTP, email)
-        return Response(OTP, status=status.HTTP_200_OK)
+        return Response({'otp': OTP}, status=status.HTTP_200_OK)
 
 
 class RegisterUserView(APIView):
@@ -25,7 +25,7 @@ class RegisterUserView(APIView):
         global OTP
         otp = request.data.pop('otp')
         if otp != OTP:
-            return Response({'error': 'Enter correct OTP',}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Enter correct OTP', }, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = UserSerializer(data={**request.data, "is_verified": True})
 
@@ -37,29 +37,11 @@ class RegisterUserView(APIView):
 
 
 class Locator(APIView):
-
-    def get(self, request):
+    @staticmethod
+    def get(request):
         queryset = User.objects.all()
-        userList = []
-        R = 6373.0
-        # approximate radius of earth in km
-
-        lat1 = radians(request.data.pop('patient_latitude'))
-        lon1 = radians(request.data.pop('patient_longitude'))
-
-        for user in queryset:
-
-            lat2 = radians(user.latitude)
-            lon2 = radians(user.longitude)
-
-            dlon = lon2 - lon1
-            dlat = lat2 - lat1
-
-            a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
-            c = 2 * atan2(sqrt(a), sqrt(1 - a))
-            distance = R * c
-
-            if distance <= 10 and user.is_available:
-                userList.append(user)
+        lat1 = radians(request.data['patient_latitude'])
+        lon1 = radians(request.data['patient_longitude'])
+        userList = filter_volunteer_by_location(queryset, lat1, lon1)
         serializer = UserSerializer(userList, many=True)
         return Response({'data': serializer.data}, status=status.HTTP_200_OK)
