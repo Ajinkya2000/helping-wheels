@@ -22,10 +22,10 @@ class GetOTP(APIView):
 class RegisterUserView(APIView):
     @staticmethod
     def post(request):
-        global OTP
-        otp = request.data.pop('otp')
-        if otp != OTP:
-            return Response({'error': 'Enter correct OTP',}, status=status.HTTP_400_BAD_REQUEST)
+#         global OTP
+#         otp = request.data.pop('otp')
+#         if otp != OTP:
+#             return Response({'error': 'Enter correct OTP',}, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = UserSerializer(data={**request.data, "is_verified": True})
 
