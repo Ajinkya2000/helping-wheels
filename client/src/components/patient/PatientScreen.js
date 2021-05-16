@@ -87,7 +87,7 @@ const PatientScreen = () => {
         onViewportChange={(viewport) => setViewport(viewport)}
         mapStyle="mapbox://styles/mapbox/streets-v11"
       >
-        {renderMarkers}
+        {patientState.volunteers && renderMarkers}
         <Marker latitude={cords.latitude} longitude={cords.longitude}>
           <button
             className={styles.markerButton}
