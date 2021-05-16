@@ -57,7 +57,11 @@ const sendEmail = (dispatch) => {
         volunteer_list,
         patient_data,
       });
+
       console.log(res);
+      dispatch({
+        type: "SEND_EMAIL",
+      });
     } catch (err) {
       console.log(err);
     }
