@@ -119,7 +119,7 @@ const PatientScreen = () => {
         className={styles.emergencyButton}
         onClick={sendEmail(patientState.volunteers, patient)}
       >
-        <h2>Emergency</h2>
+        <h2>{!patientState.emailSent ? "Emergency" : "Help Coming"}</h2>
       </div>
       {isOpen && volunteerDetail && (
         <Overlay
