@@ -6,12 +6,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .utils import create_otp, send_otp, filter_volunteer_by_location
 from .models import User, Patient
 from math import radians
-<<<<<<< HEAD
-from .utils import get_user_from_token, mail_volunteer
-=======
-from .utils import get_user_from_token, get_pusher_token
+from .utils import get_user_from_token, get_pusher_token, mail_volunteer
 from pusher_push_notifications import PushNotifications
->>>>>>> 404fd7b40abe598b3c80fd20295237d6d4bd0d7a
 from django.contrib.auth import authenticate
 
 OTP = None

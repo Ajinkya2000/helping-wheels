@@ -22,10 +22,11 @@ def send_otp(otp, email):
 
 
 def mail_volunteer(volunteer_list, data):
+    print(data)
     message = f"""
-    Patient Name: {data['patient_name']} 
-    Patient Contact: {data['patient_phone']} 
-    Patient Address: {data['patient_address']}
+    Patient Name: {data['pName']} 
+    Patient Contact: {data['pPhone']} 
+    Patient Address: {data['pAddress']}
     """
 
     send_mail(

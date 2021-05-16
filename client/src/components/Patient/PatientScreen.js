@@ -117,7 +117,7 @@ const PatientScreen = () => {
       </ReactMapGL>
       <div
         className={styles.emergencyButton}
-        onClick={sendEmail(patientState.volunteers, patient)}
+        onClick={() => sendEmail(patientState.volunteers, patient)}
       >
         <h2>{!patientState.emailSent ? "Emergency" : "Help Coming"}</h2>
       </div>
