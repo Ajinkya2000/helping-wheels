@@ -1,6 +1,7 @@
 import random
 from django.core.mail import send_mail
 from math import sin, cos, sqrt, atan2, radians
+from pusher_push_notifications import PushNotifications
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
@@ -49,3 +50,13 @@ def filter_volunteer_by_location(queryset, lat1, lon1):
             userList.append(user)
 
     return userList
+
+
+def get_pusher_token(user_id):
+    beams_client = PushNotifications(
+        instance_id='8d0baa0c-08b4-43ce-9134-e9fe4b14ec6a',
+        secret_key='6EC51704541E3F5D0BD2D6C3C0A40DF677AB58EA12B28B701A935DC98DCFEFB3',
+    )
+
+    beams_token = beams_client.generate_token(user_id=user_id)
+    return beams_token
