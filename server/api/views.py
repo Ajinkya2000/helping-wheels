@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import UserSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
-from .utils import create_otp, send_otp
+from .utils import create_otp, send_otp, get_pusher_token
 from .models import User
 from math import sin, cos, sqrt, atan2, radians
 
@@ -24,15 +24,17 @@ class RegisterUserView(APIView):
     def post(request):
         global OTP
         otp = request.data.pop('otp')
-        if otp != OTP:
-            return Response({'error': 'Enter correct OTP',}, status=status.HTTP_400_BAD_REQUEST)
+        # if otp != OTP:
+        #     return Response({'error': 'Enter correct OTP',}, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = UserSerializer(data={**request.data, "is_verified": True})
 
         if serializer.is_valid(raise_exception=True):
             user = serializer.save()
             token = str(RefreshToken.for_user(user).access_token)
-            return Response({'user': serializer.data, 'token': token}, status=status.HTTP_201_CREATED)
+            pusher_token = get_pusher_token(user_id=str(user.id))
+
+            return Response({'user': serializer.data, 'token': token, 'pusher_token': pusher_token}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -66,9 +68,9 @@ class Locator(APIView):
 
 
 
-class EmergencyView(APIView):
-    def get(self, request):
-        """
-        1. Phone Number, Latitude and Longitude will be provided from client
-        2. List of all voulenteers nearby will be provided as well
-        """
+# class EmergencyView(APIView):
+#     def get(self, request):
+#         """
+#         1. Phone Number, Latitude and Longitude will be provided from client
+#         2. List of all voulenteers nearby will be provided as well
+#         """
