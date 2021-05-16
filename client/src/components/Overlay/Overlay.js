@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./overlay.module.css";
 
-const Overlay = ({ setIsOpen }) => {
+const Overlay = ({ setIsOpen, volunteerDetail }) => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -11,29 +11,29 @@ const Overlay = ({ setIsOpen }) => {
             <span className={styles.formIcon}>
               <i className="fas fa-user"></i>
             </span>
-            Sushant Pandey
+            {volunteerDetail.name}
           </div>
           <div className={styles.formRow}>
             <span className={styles.formIcon}>
               <i className="fas fa-phone-alt"></i>
             </span>
-            9988985487
+            {volunteerDetail.phone}
           </div>
           <div className={styles.formRow}>
             <span className={styles.formIcon}>
               <i className="fas fa-car-side"></i>
             </span>
-            SUV
+            {volunteerDetail.vehicle_name}
           </div>
           <div className={styles.formRow}>
             <span className={styles.formIcon}>
               <i className="fas fa-hashtag"></i>
             </span>
-            CG16AS1234
+            {volunteerDetail.vehicle_number}
           </div>
           <span className={styles.addressText}>Address</span>
           <div className={styles.address}>
-            <p>asd asdj, pi 1243 ,SD</p>
+            <p>{volunteerDetail.address}</p>
           </div>
         </div>
         <div className={styles.closeDetail} onClick={() => setIsOpen(false)}>

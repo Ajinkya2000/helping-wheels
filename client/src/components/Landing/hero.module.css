@@ -34,7 +34,7 @@
   justify-content: space-evenly;
 }
 
-.buttonWrapper button {
+.buttonWrapper a {
   padding: 10px;
   background-color: #3ac76e;
   color: white;
@@ -45,9 +45,11 @@
   margin: 10px 0;
   width: 60%;
   font-size: 1.2rem;
+  text-decoration: none;
+  text-align: center;
 }
 
-.buttonWrapper button:nth-child(2) {
+.buttonWrapper a:nth-child(2) {
   background-color: transparent;
   color: #3ac76e;
 }
