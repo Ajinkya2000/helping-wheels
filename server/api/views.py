@@ -1,13 +1,14 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
-from .serializers import UserSerializer
+from rest_framework import serializers, status
+from .serializers import UserSerializer, PatientSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from .utils import create_otp, send_otp, filter_volunteer_by_location
-from .models import User
+from .models import User, Patient
 from math import radians
 from .utils import get_user_from_token, get_pusher_token
 from pusher_push_notifications import PushNotifications
+from django.contrib.auth import authenticate
 
 OTP = None
 
@@ -36,6 +37,20 @@ class RegisterUserView(APIView):
             token = str(RefreshToken.for_user(user).access_token)
             return Response({'user': serializer.data, 'token': token}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class LoginUserView(APIView):
+    @staticmethod
+    def post(request):
+        email = request.data['email']
+        password = request.data['password']
+        user = authenticate(username=email, password=password)
+
+        if user is None:
+            return Response({'error': 'A user with this email and password was not found.'}, status=status.HTTP_400_BAD_REQUEST)
+        serializer = UserSerializer(user)
+        token = str(RefreshToken.for_user(user).access_token)
+        return Response({'user': serializer.data, 'token': token}, status=status.HTTP_200_OK)
 
 
 class UpdateUser(APIView):
@@ -97,6 +112,15 @@ class GetNotification(APIView):
 class PatientView(APIView):
     def get(self, request):
         user = get_user_from_token(request)
-        patient = Patient.objects.get(user=user.id)
-        serializer = PatientSerializer(patient)
+        patients = Patient.objects.filter(user=user.id)
+        serializer = PatientSerializer(patients, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        user = get_user_from_token(request)
+        serializer = PatientSerializer(data={'user': user.id, **request.data})
+
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
