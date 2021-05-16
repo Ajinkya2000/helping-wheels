@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import car from "../../images/car.svg";
 import styles from "./hero.module.css";
 
@@ -14,8 +15,15 @@ function Hero() {
             For all medical situations. Faster than Ambulances.
           </p>
           <div className={styles.buttonWrapper}>
-            <button>Find volunteers to help</button>
-            <button>Register yourself as a Volunteer</button>
+            <Link to="/patient-detail">
+              <button>Find volunteers to help</button>
+            </Link>
+            <Link to="/register">
+              <button>Register yourself as a Volunteer</button>
+            </Link>
+            <Link to="/login">
+              <button>Volunteer Login</button>
+            </Link>
           </div>
         </div>
       </div>
