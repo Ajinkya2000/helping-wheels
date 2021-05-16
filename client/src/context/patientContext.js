@@ -19,7 +19,7 @@ const getVolunteers = (dispatch) => {
         patient_latitude: latitude,
         patient_longitude: longitude,
       });
-      console.log (res.data.data)
+      console.log(res.data.data);
       dispatch({
         type: "GET_VOLUNTEERS_DATA",
         payload: res.data.data,
@@ -30,26 +30,27 @@ const getVolunteers = (dispatch) => {
   };
 };
 
-const login =(dispatch) => {
-  return async({ email, password }) => {
+const login = (dispatch) => {
+  return async ({ email, password }, redirect) => {
     try {
       const res = await helpingWheels.post("login/", { email, password });
       if (res.status === 200) {
         window.localStorage.setItem("token", res.data.token);
+        console.log(res.data.user);
         dispatch({ type: "VOLUNTEER_DATA", payload: res.data.user });
-        history.push("/dashboard");
+        redirect();
       } else {
         throw new Error("Unable to Login");
       }
     } catch (e) {
       console.log(e);
     }
-  }
-}
+  };
+};
 
 export const { Provider, Context } = createDataContext(
   patientReducer,
   { getVolunteers, login },
-  { volunteers: [], volunteer },
+  { volunteers: [], volunteer: {} },
   "Patient-Context"
 );

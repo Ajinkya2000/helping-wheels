@@ -42,6 +42,7 @@ class RegisterUserView(APIView):
 class LoginUserView(APIView):
     @staticmethod
     def post(request):
+        print(request.data)
         email = request.data['email']
         password = request.data['password']
         user = authenticate(username=email, password=password)
