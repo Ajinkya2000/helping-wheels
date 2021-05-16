@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-
+import { useHistory } from "react-router";
 import styles from "./index.module.css";
 
 import helpingWheels from "../../api/helpingWheels";
 
 function VolunteerLogin() {
+  const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -13,12 +14,12 @@ function VolunteerLogin() {
     console.log("Hi");
     try {
       const res = await helpingWheels.post("login/", { email, password });
-      console.log(res);
-      // if(res.status === 200) {
-
-      // } else {
-      //   throw new Error('Unable to Login');
-      // }
+      if (res.status === 200) {
+        window.localStorage.setItem("token", res.data.token);
+        history.push("/dashboard");
+      } else {
+        throw new Error("Unable to Login");
+      }
     } catch (e) {
       console.log(e);
     }
