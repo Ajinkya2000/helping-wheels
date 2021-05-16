@@ -1,11 +1,21 @@
 import random
 from django.core.mail import send_mail
 from pusher_push_notifications import PushNotifications
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 def create_otp():
     otp = random.randint(1000, 9999)
     return otp
+
+
+def get_user_from_token(request):
+    jwt = JWTAuthentication()
+    header = jwt.get_header(request)
+    raw_token = jwt.get_raw_token(header)
+    validated_token = jwt.get_validated_token(raw_token)
+    user = jwt.get_user(validated_token)
+    return user
 
 
 def send_otp(otp, email):

@@ -1,11 +1,13 @@
+from rest_framework import response
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import UserSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
-from .utils import create_otp, send_otp, get_pusher_token
+from .utils import create_otp, send_otp, get_pusher_token, get_user_from_token
 from .models import User
 from math import sin, cos, sqrt, atan2, radians
+from pusher_push_notifications import PushNotifications
 
 OTP = None
 
@@ -23,7 +25,7 @@ class RegisterUserView(APIView):
     @staticmethod
     def post(request):
         global OTP
-        otp = request.data.pop('otp')
+        # otp = request.data.pop('otp')
         # if otp != OTP:
         #     return Response({'error': 'Enter correct OTP',}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -32,9 +34,8 @@ class RegisterUserView(APIView):
         if serializer.is_valid(raise_exception=True):
             user = serializer.save()
             token = str(RefreshToken.for_user(user).access_token)
-            pusher_token = get_pusher_token(user_id=str(user.id))
 
-            return Response({'user': serializer.data, 'token': token, 'pusher_token': pusher_token}, status=status.HTTP_201_CREATED)
+            return Response({'user': serializer.data, 'token': token}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -67,6 +68,38 @@ class Locator(APIView):
         return Response({'data': serializer.data}, status=status.HTTP_200_OK)
 
 
+class GetPusherToken(APIView):
+    def get(self, request):
+        user = get_user_from_token(request)
+        pusher_token = get_pusher_token(user_id=str(user.id))
+        return Response(pusher_token, status=status.HTTP_200_OK)
+
+
+class getNotification(APIView):
+    def get(self, request):
+        beams_client = PushNotifications(
+            instance_id='8d0baa0c-08b4-43ce-9134-e9fe4b14ec6a',
+            secret_key='6EC51704541E3F5D0BD2D6C3C0A40DF677AB58EA12B28B701A935DC98DCFEFB3',
+        )
+
+        qs = User.objects.all()
+        userIds = [str(user.id) for user in qs]
+
+        response = beams_client.publish_to_users(
+            # user_ids=userIds,
+            user_ids=['18', '19'],
+            publish_body={
+                'web': {
+                    'notification': {
+                        'title': 'yo',
+                        'body': 'nice',
+                    }
+                }
+            }
+        )
+
+        print(response)
+        return Response({}, 200)
 
 # class EmergencyView(APIView):
 #     def get(self, request):
