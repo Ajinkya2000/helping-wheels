@@ -38,13 +38,17 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name',]
+    REQUIRED_FIELDS = ['name', ]
 
     def __str__(self):
         return self.name
 
 
-# class Patient(models.Model):
-#     user = models.ForeignKey(User, on_delete=None)
-#     name = models.CharField(max_length=100)
-#     phone = models.CharField(max_length=10)
+class Patient(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    phone = models.CharField(max_length=10)
+    address = models.TextField()
+
+    def __str__(self):
+        return self.name
