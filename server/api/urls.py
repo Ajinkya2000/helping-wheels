@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import GetOTP, RegisterUserView, Locator, UpdateUser, LoginUserView
+from .views import GetOTP, RegisterUserView, Locator, UpdateUser, LoginUserView, Mail_Volunteer
 
 urlpatterns = [
     path('send-otp/<str:email>/', GetOTP.as_view(), name="send-otp"),
@@ -7,4 +7,5 @@ urlpatterns = [
     path('login/', LoginUserView.as_view(), name="login"),
     path('get-volunteer/', Locator.as_view(), name="get-volunteer"),
     path('update-user/', UpdateUser.as_view(), name="update-user"),
+    path('mail-volunteer/', Mail_Volunteer.as_view(), name="mail-volunteer")
 ]
