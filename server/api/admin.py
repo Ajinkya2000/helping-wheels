@@ -12,7 +12,7 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', 'name', 'phone', 'address', 'vehicle', 'vehicle_number', 'longitude', 'latitude')
+        fields = ('email', 'name', 'phone', 'address', 'vehicle_name', 'vehicle_number', 'longitude', 'latitude')
 
     def save(self, commit=True):
         # Save the provided password in hashed format
@@ -32,7 +32,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', 'password', 'name', 'phone', 'address', 'vehicle', 'vehicle_number', 'longitude', 'latitude', 'is_staff', 'is_superuser')
+        fields = ('email', 'password', 'name', 'phone', 'address', 'vehicle_name', 'vehicle_number', 'longitude', 'latitude', 'is_staff', 'is_superuser')
 
 
 class UserAdmin(BaseUserAdmin):
@@ -46,7 +46,7 @@ class UserAdmin(BaseUserAdmin):
     list_display = ('name', 'email', 'is_active', 'is_superuser')
     list_filter = ('is_staff', 'is_active')
     fieldsets = (
-        ('Volunteer Details', {'fields': ('email', 'password', 'name', 'phone', 'address', 'vehicle', 'vehicle_number', 'longitude', 'latitude',)}),
+        ('Volunteer Details', {'fields': ('email', 'password', 'name', 'phone', 'address', 'vehicle_name', 'vehicle_number', 'longitude', 'latitude',)}),
         ('Permissions', {'fields': ('is_staff',)}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin

@@ -1,0 +1,81 @@
+.wrapper {
+  background-color: #ffffc7a6;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 3% 10%;
+}
+
+.imgWrapper {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imgWrapper img {
+  width: 100%;
+}
+
+.textWrap {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 6%;
+}
+
+.textWrap h2 {
+  font-family: "Comfortaa", sans-serif;
+  font-size: 2.5rem;
+}
+
+.textWrap p {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.3rem;
+  line-height: 2;
+}
+
+.curve path {
+  fill: #ffffc7;
+  stroke: #ffffc7;
+}
+
+.container {
+  overflow: hidden;
+  width: 100%;
+  margin: 0px;
+  /* we don't want the pseudo-elements sticking out */
+}
+
+.container svg {
+  display: block;
+  background-color: #ffffc7a6;
+}
+
+*,
+*:after,
+*::before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@media only screen and (max-width: 768px) {
+  .wrapper {
+    flex-direction: column;
+    padding: 1%;
+  }
+
+  .imgWrapper img {
+    width: 80%;
+  }
+
+  .textWrap h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .textWrap p {
+    font-size: 1rem;
+  }
+}
