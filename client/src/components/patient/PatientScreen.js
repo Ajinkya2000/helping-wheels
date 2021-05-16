@@ -21,7 +21,7 @@ const PatientScreen = () => {
     longitude: 78.0421,
     width: "100vw",
     height: "100vh",
-    zoom: 4,
+    zoom: 13,
   });
 
   const [cords, setCords] = useState({
