@@ -6,7 +6,7 @@ function VolunteerLogin() {
   return (
     <div className={styles.wrapper}>
       <div className={styles.formDiv}>
-        <h2>Volunteer Registration</h2>
+        <h2>Volunteer Login</h2>
         <form action="">
           <div className={styles.formRow}>
             <p>Email</p>

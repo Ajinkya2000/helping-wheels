@@ -26,7 +26,7 @@ function Footer() {
           <i class="fab fa-reddit"></i>
         </div>
         <div>
-          <p>Made my CodeRux</p>
+          <p>Made by CodeRux</p>
         </div>
       </div>
     </div>

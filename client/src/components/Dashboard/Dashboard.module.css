@@ -49,12 +49,12 @@
   margin-bottom: 1rem;
   border-radius: 25px;
   padding-right: .5rem;
+  line-height: 2;
 }
 
 .detailField {
   /* width: 250px; */
   min-width: 30%;
-  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -154,7 +154,7 @@
   }
 
   .detailField {
-    min-width: 35%;
+    width: 50%;
   }
 
   .detailCheck {
