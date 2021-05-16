@@ -12,8 +12,13 @@ import styles from "./PatientScreen.module.css";
 const PatientScreen = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [volunteerDetail, setVolunteerDetail] = useState(null);
+  const [patient, setPatient] = useState({});
 
-  const { getVolunteers, state: patientState } = useContext(PatientContext);
+  const {
+    getVolunteers,
+    sendEmail,
+    state: patientState,
+  } = useContext(PatientContext);
 
   const mapRef = useRef();
   const [viewport, setViewport] = useState({
@@ -56,6 +61,13 @@ const PatientScreen = () => {
     } else {
       console.log("Denied");
     }
+  }, []);
+
+  useEffect(() => {
+    const pName = localStorage.getItem("patient_name");
+    const pPhone = localStorage.getItem("patient_phone");
+    const pAddress = localStorage.getItem("patient_adderss");
+    setPatient({ pName, pAddress, pPhone });
   }, []);
 
   const renderMarkers = patientState.volunteers.map((volunteer) => {
@@ -103,7 +115,10 @@ const PatientScreen = () => {
           value={cords}
         />
       </ReactMapGL>
-      <div className={styles.emergencyButton}>
+      <div
+        className={styles.emergencyButton}
+        onClick={sendEmail(patientState.volunteers, patient)}
+      >
         <h2>Emergency</h2>
       </div>
       {isOpen && volunteerDetail && (
