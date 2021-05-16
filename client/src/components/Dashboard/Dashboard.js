@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { useHistory } from "react-router";
 import Toggle from "react-toggle";
 import styles from "./Dashboard.module.css";
 import "./Dashboard.css";
@@ -6,8 +7,26 @@ import PatientList from "./PatientList";
 // import "react-toggle/style.css"
 import profile from "../../images/profile.svg";
 
+import { Context as PatientContext } from "../../context/patientContext";
+
 const Dashboard = () => {
-  const [isAvailable, setIsAvailable] = useState(true);
+  const history = useHistory();
+  const { state } = useContext(PatientContext);
+  const { volunteer } = state;
+  useEffect(() => {
+    if (!window.localStorage.getItem("token")) {
+      history.push("/login");
+    }
+  }, []);
+
+  const [isAvailable, setIsAvailable] = useState(volunteer.isAvailable);
+  const [name, setName] = useState(volunteer.name);
+  const [phone, setPhone] = useState(volunteer.phone);
+  const [vehicle_name, setVehicle_name] = useState(volunteer.vehicle_name);
+  const [vehicle_number, setVehicle_number] = useState(
+    volunteer.vehicle_number
+  );
+  const [address, setAddress] = useState(volunteer.address);
 
   return (
     <div className={styles.container}>
@@ -17,23 +36,23 @@ const Dashboard = () => {
           <div className={styles.detailLeft}>
             <div className={styles.detailRow}>
               <span className={styles.detailField}>Name</span>
-              Sushant Pandey
+              {name}
             </div>
             <div className={styles.detailRow}>
               <span className={styles.detailField}>Mobile number</span>
-              9988985487
+              {phone}
             </div>
             <div className={styles.detailRow}>
               <span className={styles.detailField}>Vehicle type</span>
-              SUV
+              {vehicle_name}
             </div>
             <div className={styles.detailRow}>
               <span className={styles.detailField}>Vehicle number</span>
-              CG16AS1234
+              {vehicle_number}
             </div>
             <div className={styles.detailRow}>
               <span className={styles.detailField}>Address</span>
-              xyz colony, near asd temple, pin. 112233
+              {address}
             </div>
             <div className={styles.detailCheck}>
               <Toggle

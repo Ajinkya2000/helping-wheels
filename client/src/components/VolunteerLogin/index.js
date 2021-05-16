@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import { useHistory } from "react-router";
 import styles from "./index.module.css";
 import { Context as PatientContext } from "../../context/patientContext";
-import helpingWheels from "../../api/helpingWheels";
 
 function VolunteerLogin() {
   const { login } = useContext(PatientContext);
@@ -12,7 +11,9 @@ function VolunteerLogin() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    login(email, password);
+    login({ email, password }, () => {
+      history.push("/dashboard");
+    });
   };
   return (
     <div className={styles.wrapper}>
