@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ReactMapGL, { Marker } from "react-map-gl";
 import Overlay from "../Overlay/Overlay";
+import ReverseGeocoder from "./ReverseGeocoder";
 import styles from "./PatientScreen.module.css";
 
 const PatientScreen = () => {
+  const mapRef = useRef();
   const [viewport, setViewport] = useState({
     latitude: 27.1751,
     longitude: 78.0421,
@@ -27,7 +29,11 @@ const PatientScreen = () => {
       latitude: pos.coords.latitude,
       longitude: pos.coords.longitude,
     });
-    setViewport({...viewport, latitude: pos.coords.latitude, longitude: pos.coords.longitude});
+    setViewport({
+      ...viewport,
+      latitude: pos.coords.latitude,
+      longitude: pos.coords.longitude,
+    });
   };
 
   const error = (err) => {
@@ -80,6 +86,7 @@ const PatientScreen = () => {
   return (
     <div>
       <ReactMapGL
+        ref={mapRef}
         {...viewport}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
         onViewportChange={(viewport) => setViewport(viewport)}
@@ -87,10 +94,19 @@ const PatientScreen = () => {
       >
         {renderMarkers}
         <Marker latitude={cords.latitude} longitude={cords.longitude}>
-          <button className={styles.markerButton} onClick={() => setIsOpen(true)}>
+          <button
+            className={styles.markerButton}
+            onClick={() => setIsOpen(true)}
+          >
             <i className="fas fa-map-pin"></i>
           </button>
         </Marker>
+        <ReverseGeocoder
+          viewport={viewport}
+          setViewport={setViewport}
+          mapRef={mapRef}
+          value={cords}
+        />
       </ReactMapGL>
       <div className={styles.emergencyButton}>
         <h2>Emergency</h2>

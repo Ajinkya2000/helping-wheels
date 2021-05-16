@@ -2,11 +2,11 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Landing from "./components/Landing/index";
-import PatientScreen from "./components/Patient/PatientScreen";
+import PatientScreen from "./components/patient/PatientScreen";
 import VolunteerLogin from "./components/VolunteerLogin/index";
 import VolunteerRegister from "./components/RegisterVolunteer/index";
 import Dashboard from "./components/Dashboard/Dashboard";
-import PatientDetail from "./components/PatientDetails/index"
+import PatientDetail from "./components/PatientDetails/index";
 
 function App() {
   return (
