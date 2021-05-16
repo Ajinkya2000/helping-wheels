@@ -10,6 +10,9 @@ import ReverseGeocoder from "./ReverseGeocoder";
 import styles from "./PatientScreen.module.css";
 
 const PatientScreen = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [volunteerDetail, setVolunteerDetail] = useState(null);
+
   const { getVolunteers, state: patientState } = useContext(PatientContext);
 
   const mapRef = useRef();
@@ -18,7 +21,7 @@ const PatientScreen = () => {
     longitude: 78.0421,
     width: "100vw",
     height: "100vh",
-    zoom: 15,
+    zoom: 4,
   });
 
   const [cords, setCords] = useState({
@@ -55,12 +58,20 @@ const PatientScreen = () => {
     }
   }, []);
 
-  const [isOpen, setIsOpen] = useState(false);
-
   const renderMarkers = patientState.volunteers.map((volunteer) => {
     return (
-      <Marker latitude={volunteer.latitude} longitude={volunteer.longitude} key={volunteer.id}>
-        <button className={styles.markerButton} onClick={() => setIsOpen(true)}>
+      <Marker
+        latitude={volunteer.latitude}
+        longitude={volunteer.longitude}
+        key={volunteer.id}
+      >
+        <button
+          className={styles.markerButton}
+          onClick={() => {
+            setIsOpen(true);
+            setVolunteerDetail(volunteer);
+          }}
+        >
           <i className="fas fa-map-pin"></i>
         </button>
       </Marker>
@@ -95,7 +106,12 @@ const PatientScreen = () => {
       <div className={styles.emergencyButton}>
         <h2>Emergency</h2>
       </div>
-      {isOpen && <Overlay setIsOpen={(e) => setIsOpen(e)} />}
+      {isOpen && volunteerDetail && (
+        <Overlay
+          volunteerDetail={volunteerDetail}
+          setIsOpen={(e) => setIsOpen(e)}
+        />
+      )}
     </div>
   );
 };
