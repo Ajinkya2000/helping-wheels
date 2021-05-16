@@ -25,7 +25,7 @@ class RegisterUserView(APIView):
     def post(request):
         global OTP
         otp = request.data.pop('otp')
-        if otp != OTP:
+        if int(otp) != OTP:
             return Response({'error': 'Enter correct OTP', }, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = UserSerializer(data={**request.data, "is_verified": True})
@@ -41,7 +41,8 @@ class UpdateUser(APIView):
     @staticmethod
     def patch(request):
         user = get_user_from_token(request)
-        serializer = UserSerializer(instance=user, data=request.data, partial=True)
+        serializer = UserSerializer(
+            instance=user, data=request.data, partial=True)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
