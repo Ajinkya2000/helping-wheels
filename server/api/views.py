@@ -117,10 +117,14 @@ class PatientView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
-        user = get_user_from_token(request)
+        user = User.objects.get(id=request.data['id'])
+        request.data.pop('id')
         serializer = PatientSerializer(data={'user': user.id, **request.data})
 
         if serializer.is_valid(raise_exception=True):
             serializer.save()
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    # def delete(self, request):
+    #     user = get_user_from_token(request)
