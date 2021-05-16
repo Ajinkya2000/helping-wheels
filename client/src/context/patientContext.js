@@ -7,6 +7,8 @@ const patientReducer = (state, action) => {
       return { ...state, volunteers: action.payload };
     case "VOLUNTEER_DATA":
       return { ...state, volunteer: action.payload };
+    case "SEND_EMAIL":
+      return { ...state, emailSent: true };
     default:
       return state;
   }
@@ -48,9 +50,23 @@ const login = (dispatch) => {
   };
 };
 
+const sendEmail = (dispatch) => {
+  return async (volunteer_list, patient_data) => {
+    try {
+      const res = await helpingWheels.post("mail-volunteer/", {
+        volunteer_list,
+        patient_data,
+      });
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
 export const { Provider, Context } = createDataContext(
   patientReducer,
-  { getVolunteers, login },
-  { volunteers: [], volunteer: {} },
+  { getVolunteers, login, sendEmail },
+  { volunteers: [], volunteer: {}, emailSent: false },
   "Patient-Context"
 );
