@@ -45,7 +45,11 @@ def filter_volunteer_by_location(queryset, lat1, lon1):
         c = 2 * atan2(sqrt(a), sqrt(1 - a))
         distance = R * c
 
+<<<<<<< HEAD
         if distance <= 10 and user.is_available and count < 10:
+=======
+        if distance <= 1000 and user.is_available:
+>>>>>>> c08b4abcdf40e2dea9e6e2f23003e3085187fc01
             count += 1
             userList.append(user)
 

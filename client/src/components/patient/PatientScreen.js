@@ -7,7 +7,7 @@ import Overlay from "../Overlay/Overlay";
 import styles from "./PatientScreen.module.css";
 
 const PatientScreen = () => {
-  const { getVolunteers } = useContext(PatientContext);
+  const { getVolunteers, state } = useContext(PatientContext);
 
   const [viewport, setViewport] = useState({
     latitude: 27.1751,
@@ -27,7 +27,6 @@ const PatientScreen = () => {
   };
 
   const success = (pos) => {
-    console.log(pos.coords.latitude, pos.coords.longitude);
     setCords({
       latitude: pos.coords.latitude,
       longitude: pos.coords.longitude,
@@ -44,9 +43,9 @@ const PatientScreen = () => {
   };
 
   useEffect(() => {
+    getVolunteers(cords);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(success, error, options);
-      getVolunteers(cords);
     } else {
       console.log("Denied");
     }
@@ -87,6 +86,21 @@ const PatientScreen = () => {
   //   );
   // });
 
+  const renderMarkers = state.volunteers.map((volunteer) => {
+    return (
+      <Marker
+        latitude={volunteer.latitude}
+        longitude={volunteer.longitude}
+        key={volunteer.id}
+      >
+        {console.log(volunteer.latitude)}
+        <button className={styles.markerButton} onClick={() => setIsOpen(true)}>
+          <i className="fas fa-map-pin"></i>
+        </button>
+      </Marker>
+    );
+  });
+
   return (
     <div>
       <ReactMapGL
@@ -95,7 +109,7 @@ const PatientScreen = () => {
         onViewportChange={(viewport) => setViewport(viewport)}
         mapStyle="mapbox://styles/mapbox/streets-v11"
       >
-        {/* {renderMarkers} */}
+        {renderMarkers}
         <Marker latitude={cords.latitude} longitude={cords.longitude}>
           <button
             className={styles.markerButton}
