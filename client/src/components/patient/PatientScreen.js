@@ -1,9 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import ReactMapGL, { Marker } from "react-map-gl";
+
+import { Context as PatientContext } from "../../context/patientContext";
+
 import Overlay from "../Overlay/Overlay";
 import styles from "./PatientScreen.module.css";
 
 const PatientScreen = () => {
+  const { getVolunteers } = useContext(PatientContext);
+
   const [viewport, setViewport] = useState({
     latitude: 27.1751,
     longitude: 78.0421,
@@ -27,7 +32,11 @@ const PatientScreen = () => {
       latitude: pos.coords.latitude,
       longitude: pos.coords.longitude,
     });
-    setViewport({...viewport, latitude: pos.coords.latitude, longitude: pos.coords.longitude});
+    setViewport({
+      ...viewport,
+      latitude: pos.coords.latitude,
+      longitude: pos.coords.longitude,
+    });
   };
 
   const error = (err) => {
@@ -37,6 +46,7 @@ const PatientScreen = () => {
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(success, error, options);
+      getVolunteers(cords);
     } else {
       console.log("Denied");
     }
@@ -44,38 +54,38 @@ const PatientScreen = () => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const fakeMarkers = [
-    {
-      id: 1,
-      latitude: 27.1751,
-      longitude: 78.0431,
-    },
-    {
-      id: 2,
-      latitude: 27.1764,
-      longitude: 78.0441,
-    },
-    {
-      id: 3,
-      latitude: 27.179,
-      longitude: 78.0405,
-    },
-    {
-      id: 4,
-      latitude: 27.1781,
-      longitude: 78.0421,
-    },
-  ];
+  // const fakeMarkers = [
+  //   {
+  //     id: 1,
+  //     latitude: 27.1751,
+  //     longitude: 78.0431,
+  //   },
+  //   {
+  //     id: 2,
+  //     latitude: 27.1764,
+  //     longitude: 78.0441,
+  //   },
+  //   {
+  //     id: 3,
+  //     latitude: 27.179,
+  //     longitude: 78.0405,
+  //   },
+  //   {
+  //     id: 4,
+  //     latitude: 27.1781,
+  //     longitude: 78.0421,
+  //   },
+  // ];
 
-  const renderMarkers = fakeMarkers.map((fm) => {
-    return (
-      <Marker latitude={fm.latitude} longitude={fm.longitude} key={fm.id}>
-        <button className={styles.markerButton} onClick={() => setIsOpen(true)}>
-          <i className="fas fa-map-pin"></i>
-        </button>
-      </Marker>
-    );
-  });
+  // const renderMarkers = fakeMarkers.map((fm) => {
+  //   return (
+  //     <Marker latitude={fm.latitude} longitude={fm.longitude} key={fm.id}>
+  //       <button className={styles.markerButton} onClick={() => setIsOpen(true)}>
+  //         <i className="fas fa-map-pin"></i>
+  //       </button>
+  //     </Marker>
+  //   );
+  // });
 
   return (
     <div>
@@ -85,9 +95,12 @@ const PatientScreen = () => {
         onViewportChange={(viewport) => setViewport(viewport)}
         mapStyle="mapbox://styles/mapbox/streets-v11"
       >
-        {renderMarkers}
+        {/* {renderMarkers} */}
         <Marker latitude={cords.latitude} longitude={cords.longitude}>
-          <button className={styles.markerButton} onClick={() => setIsOpen(true)}>
+          <button
+            className={styles.markerButton}
+            onClick={() => setIsOpen(true)}
+          >
             <i className="fas fa-map-pin"></i>
           </button>
         </Marker>
