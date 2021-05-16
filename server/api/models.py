@@ -43,3 +43,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.name
 
+
+# class Patient(models.Model):
+#     user = models.ForeignKey(User, on_delete=None)
+#     name = models.CharField(max_length=100)
+#     phone = models.CharField(max_length=10)

@@ -7,6 +7,7 @@ from .utils import create_otp, send_otp, filter_volunteer_by_location
 from .models import User
 from math import radians
 from .utils import get_user_from_token
+from django.contrib.auth import authenticate
 
 OTP = None
 
@@ -25,7 +26,7 @@ class RegisterUserView(APIView):
     def post(request):
         global OTP
         otp = request.data.pop('otp')
-        if otp != OTP:
+        if int(otp) != OTP:
             return Response({'error': 'Enter correct OTP', }, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = UserSerializer(data={**request.data, "is_verified": True})
@@ -35,6 +36,20 @@ class RegisterUserView(APIView):
             token = str(RefreshToken.for_user(user).access_token)
             return Response({'user': serializer.data, 'token': token}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class LoginUserView(APIView):
+    @staticmethod
+    def post(request):
+        email = request.data['email']
+        password = request.data['password']
+        user = authenticate(username=email, password=password)
+
+        if user is None:
+            return Response({'error': 'A user with this email and password was not found.'}, status=status.HTTP_400_BAD_REQUEST)
+        serializer = UserSerializer(user)
+        token = str(RefreshToken.for_user(user).access_token)
+        return Response({'user': serializer.data, 'token': token}, status=status.HTTP_200_OK)
 
 
 class UpdateUser(APIView):
