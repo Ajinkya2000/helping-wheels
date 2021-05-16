@@ -21,6 +21,22 @@ def send_otp(otp, email):
     )
 
 
+def mail_volunteer(volunteer_list, data):
+    message = f"""
+    Patient Name: {data['patient_name']} 
+    Patient Contact: {data['patient_phone']} 
+    Patient Address: {data['patient_address']}
+    """
+
+    send_mail(
+        subject='Emergency!! Please help the patient in need!!',
+        message=message,
+        from_email='agrawal.kashish1907@gmail.com',
+        recipient_list=volunteer_list,
+        fail_silently=False,
+    )
+
+
 def get_user_from_token(request):
     jwt = JWTAuthentication()
     header = jwt.get_header(request)

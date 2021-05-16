@@ -6,8 +6,12 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .utils import create_otp, send_otp, filter_volunteer_by_location
 from .models import User, Patient
 from math import radians
+<<<<<<< HEAD
+from .utils import get_user_from_token, mail_volunteer
+=======
 from .utils import get_user_from_token, get_pusher_token
 from pusher_push_notifications import PushNotifications
+>>>>>>> 404fd7b40abe598b3c80fd20295237d6d4bd0d7a
 from django.contrib.auth import authenticate
 
 OTP = None
@@ -20,6 +24,18 @@ class GetOTP(APIView):
         OTP = create_otp()
         send_otp(OTP, email)
         return Response({'otp': OTP}, status=status.HTTP_200_OK)
+
+
+class Mail_Volunteer(APIView):
+    @staticmethod
+    def post(request):
+        volunteer_list = []
+        for user in request.data['volunteer_list']:
+            volunteer_list.append(user['email'])
+        if volunteer_list:
+            mail_volunteer(volunteer_list, request.data['patient_data'])
+            return Response({"data": "success"}, status=status.HTTP_200_OK)
+        return Response({"error": "No volunteer available right now!"}, status=status.HTTP_200_OK)
 
 
 class RegisterUserView(APIView):
