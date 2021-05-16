@@ -12,7 +12,6 @@
 
 .wrapper {
   width: 40%;
-  /* min-height: 70%; */
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -40,7 +39,6 @@
   display: flex;
   font-size: 1.25rem;
   align-items: center;
-  /* background-color: #3ac76ea4; */
   border: 2px solid #3ac76e;
   margin-bottom: 1rem;
   border-radius: 25px;
@@ -61,7 +59,6 @@
 
 .addressText {
   font-size: 1rem;
-  /* border: 2px solid #3ac76e; */
   background-color: #26af58;
   color: white;
   border-radius: 25px;
@@ -74,22 +71,11 @@
   border-radius: 15px;
   margin-top: 1rem;
   padding: 0 .5rem;
-  /* min-height: 5rem; */
-  /* overflow: wrap; */
 } 
 
 .address p {
   line-break: strict;
 }
-
-/* .formRow p {
-  width: 50%;
-}
-
-.formCol1 {
-  text-align: right;
-  padding-right: 1rem;
-} */
 
 .closeDetail {
   height: 39px;

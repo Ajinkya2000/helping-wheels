@@ -50,7 +50,7 @@ class UpdateUser(APIView):
 
 class Locator(APIView):
     @staticmethod
-    def get(request):
+    def post(request):
         queryset = User.objects.all()
         lat1 = radians(request.data['patient_latitude'])
         lon1 = radians(request.data['patient_longitude'])
