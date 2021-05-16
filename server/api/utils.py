@@ -32,9 +32,9 @@ def get_user_from_token(request):
 def filter_volunteer_by_location(queryset, lat1, lon1):
     userList = []
     R = 6373.0
+    count = 0
     # approximate radius of earth in km
     for user in queryset:
-
         lat2 = radians(user.latitude)
         lon2 = radians(user.longitude)
 
@@ -45,7 +45,8 @@ def filter_volunteer_by_location(queryset, lat1, lon1):
         c = 2 * atan2(sqrt(a), sqrt(1 - a))
         distance = R * c
 
-        if distance <= 10 and user.is_available:
+        if distance <= 10 and user.is_available and count <= 10:
+            count += 1
             userList.append(user)
 
     return userList
