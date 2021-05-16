@@ -1,28 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router";
 import styles from "./index.module.css";
-
+import { Context as PatientContext } from "../../context/patientContext";
 import helpingWheels from "../../api/helpingWheels";
 
 function VolunteerLogin() {
+  const { login } = useContext(PatientContext);
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Hi");
-    try {
-      const res = await helpingWheels.post("login/", { email, password });
-      if (res.status === 200) {
-        window.localStorage.setItem("token", res.data.token);
-        history.push("/dashboard");
-      } else {
-        throw new Error("Unable to Login");
-      }
-    } catch (e) {
-      console.log(e);
-    }
+    login(email, password);
   };
   return (
     <div className={styles.wrapper}>
