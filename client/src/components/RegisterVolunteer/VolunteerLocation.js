@@ -12,7 +12,7 @@ function VolunteerLocation({ viewport, setViewPort }) {
   return (
     <div>
       <ReactMapGL
-        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+        mapboxApiAccessToken="pk.eyJ1IjoiYWppbmt5YTcyMDYiLCJhIjoiY2tvcmV4bjdqMTJveTJvc3p5aHp2cDNxcCJ9.Y1u-DV5tH9Se1Hvcq2Goug"
         mapStyle="mapbox://styles/mapbox/streets-v11"
         {...viewport}
         {...mapStyle}

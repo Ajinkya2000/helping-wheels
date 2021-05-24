@@ -86,7 +86,7 @@ function RegisterVolunteer() {
               <input type="text" value={otp} onChange={(e) => setOtp(e.target.value)} required />
             </div>
             <div>
-              <p>Set a Password</p>
+              <p>Password</p>
               <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
             </div>
             <div>
@@ -115,7 +115,7 @@ function RegisterVolunteer() {
 
             <p>Type in your location or drag the marker in the map</p>
             <Geocoder
-              mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+              mapboxApiAccessToken="pk.eyJ1IjoiYWppbmt5YTcyMDYiLCJhIjoiY2tvcmV4bjdqMTJveTJvc3p5aHp2cDNxcCJ9.Y1u-DV5tH9Se1Hvcq2Goug"
               onSelected={onSelected}
               viewport={viewport}
               hideOnSelect={true}

@@ -4,7 +4,6 @@ import Toggle from "react-toggle";
 import styles from "./Dashboard.module.css";
 import "./Dashboard.css";
 import PatientList from "./PatientList";
-// import "react-toggle/style.css"
 import profile from "../../images/profile.svg";
 
 import { Context as PatientContext } from "../../context/patientContext";
@@ -19,13 +18,19 @@ const Dashboard = () => {
     }
   }, []);
 
+  // eslint-disable-next-line
   const [isAvailable, setIsAvailable] = useState(volunteer.isAvailable);
+  // eslint-disable-next-line
   const [name, setName] = useState(volunteer.name);
+  // eslint-disable-next-line
   const [phone, setPhone] = useState(volunteer.phone);
+  // eslint-disable-next-line
   const [vehicle_name, setVehicle_name] = useState(volunteer.vehicle_name);
+  // eslint-disable-next-line
   const [vehicle_number, setVehicle_number] = useState(
     volunteer.vehicle_number
   );
+  // eslint-disable-next-line
   const [address, setAddress] = useState(volunteer.address);
 
   return (

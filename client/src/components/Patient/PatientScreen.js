@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import ReactMapGL, { Marker } from "react-map-gl";
 
+import mapboxgl from "mapbox-gl";
+
 // Context Imports
 import { Context as PatientContext } from "../../context/patientContext";
 
@@ -8,6 +10,13 @@ import { Context as PatientContext } from "../../context/patientContext";
 import Overlay from "../Overlay/Overlay";
 import ReverseGeocoder from "./ReverseGeocoder";
 import styles from "./PatientScreen.module.css";
+
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass =
+// eslint-disable-next-line import/no-webpack-loader-syntax
+  require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
+
+mapboxgl.accessToken = "pk.eyJ1IjoiYWppbmt5YTcyMDYiLCJhIjoiY2tvcmV4bjdqMTJveTJvc3p5aHp2cDNxcCJ9.Y1u-DV5tH9Se1Hvcq2Goug";
 
 const PatientScreen = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -95,7 +104,7 @@ const PatientScreen = () => {
       <ReactMapGL
         ref={mapRef}
         {...viewport}
-        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+        mapboxApiAccessToken="pk.eyJ1IjoiYWppbmt5YTcyMDYiLCJhIjoiY2tvcmV4bjdqMTJveTJvc3p5aHp2cDNxcCJ9.Y1u-DV5tH9Se1Hvcq2Goug"
         onViewportChange={(viewport) => setViewport(viewport)}
         mapStyle="mapbox://styles/mapbox/streets-v11"
       >
